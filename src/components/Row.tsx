@@ -11,10 +11,9 @@ interface IProps {
 
 const Row:React.FC<IProps> = ({title,movies}) => {
     const rowRef = useRef<HTMLDivElement>(null);
-    const [isMoved, setIsMoved] = useState(false);
+
 
     const  handleClick = (direciton:string) =>{
-        setIsMoved(true);
         // si tiene valor
         if(rowRef.current) {
             //obtenemos scrollLeft y su ancho
@@ -38,7 +37,7 @@ const Row:React.FC<IProps> = ({title,movies}) => {
                 <div ref={rowRef} className='flex items-center gap-1 overflow-x-scroll md:space-x-3 md:p-2 scrollbar-hide'>
                     {
                         movies.map(i => (
-                            <Thumbnail key={i.id} name={i.name ?? i.title} image={i.backdrop_path ?? i.poster_path} description={i.overview}/>
+                            <Thumbnail key={i.id} movie={i}/>
                         ))
                     }
                 </div>

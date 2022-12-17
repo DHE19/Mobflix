@@ -2,8 +2,9 @@
 import {PlayIcon,InformationCircleIcon} from '@heroicons/react/24/solid'
 import Image from "next/legacy/image"
 import { useEffect, useState } from "react";
+import { modalState, movieState } from '../atoms/modalAtom';
 import { BASE_URL_IMAGE } from "../constants/movies";
-
+import {useRecoilState} from 'recoil'
 
 interface IProps{
     destacado: IMovie[]
@@ -11,6 +12,9 @@ interface IProps{
 
 const Banner:React.FC<IProps> = ({destacado}) => {
     const [movie, setMovie] = useState<IMovie | null>();
+    //AS REDUX
+    const [,setShowModal] = useRecoilState(modalState);
+    const [,setCurrentMovie] = useRecoilState(movieState);
 
     
     useEffect(() => {
@@ -25,13 +29,21 @@ const Banner:React.FC<IProps> = ({destacado}) => {
                 objectFit="cover"
                 alt={""}/>
             </div>
-            <div className='flex flex-col gap-5 '>
+            <div className='flex flex-col gap-5'>
                 <h1 className="text-2xl lg:text-7xl md:text-4xl font-bold">{movie?.title || movie?.name || movie?.original_name}</h1>
                 <p className="max-w-xs text-xs md:max-w-md md:text-lg lg:max-w-2xl lg:text-xl">{movie?.overview.split('').map((i,index) => index < 150 ? i: null).join('')}...</p>
 
                 <div className='flex gap-5'>
                     <button className="bannerButton bg-white text-black"><PlayIcon className='w-4 h-4 text-black md:h-7 md:w-7'/> Play</button>
-                    <button className="bannerButton bg-[gray]/50"><InformationCircleIcon className='w-4 h-4 text-white md:h-7 md:w-7'/>More Info</button>
+                    <button 
+                    onClick={() =>{
+                        setCurrentMovie(movie as IMovie);
+                        setShowModal(true);
+                    }}
+                    className="bannerButton bg-[gray]/50">
+                        <InformationCircleIcon className='w-4 h-4 text-white md:h-7 md:w-7'/>
+                        More Info
+                    </button>
                 </div>
             </div>
         </div>
@@ -39,3 +51,4 @@ const Banner:React.FC<IProps> = ({destacado}) => {
 }
 
 export default Banner
+
