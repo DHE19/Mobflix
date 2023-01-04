@@ -45,6 +45,13 @@ const Login = () => {
         height={150}
         />
         <div className="h-screen  w-screen flex flex-col justify-center  items-center">
+
+            <div className=" p-6 my-4  bg-red-200 rounded-2xl border-[1px] border-red-600 text-slate-700">
+                Usa las siguientes credenciales <br />
+                <span className="text-red-400 text-sm">Correo:</span>testuser@test.com
+                <br />
+                <span className="text-red-400 text-sm">Contraseña:</span>contraseña
+            </div>
             <form  
             onSubmit={handleSubmit(onSubmit)}
             className="relative space-y-8 rounded bg-black/75 py-10 px-6 md:mt-0 md:max-w-md md:px-14">
